@@ -18,10 +18,10 @@ object BinaryDiagnostic {
   def toDecimal(binary: Array[Int]): Int = Integer.parseInt(binary.mkString, 2)
 
   @tailrec
-  def calculate(operation: (Int, Int) => Boolean)(diagnostic: List[Array[Int]], index: Int = 0): Int = diagnostic match {
+  def calculate(criteria: (Int, Int) => Boolean)(diagnostic: List[Array[Int]], index: Int = 0): Int = diagnostic match {
     case List(single) => toDecimal(single)
     case _ =>
       val (ones, zeroes) = diagnostic.partition(_(index) == 1)
-      calculate(operation)(if (operation(ones.length, zeroes.length)) ones else zeroes, index + 1)
+      calculate(criteria)(if (criteria(ones.length, zeroes.length)) ones else zeroes, index + 1)
   }
 }
