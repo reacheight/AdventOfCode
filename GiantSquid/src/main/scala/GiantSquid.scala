@@ -14,7 +14,7 @@ object GiantSquid {
 
   @tailrec
   def calculateScore(firstWin:  Boolean)(boards: Array[Array[Array[Option[Int]]]], numbers: Array[Int]): Int = {
-    val marked = boards.map(board => board.map(row => row.map(number => if (number.contains(numbers.head)) None else number)))
+    val marked = boards.map(board => board.map(row => row.map(number => number.find(_ != numbers.head))))
     val (won, others) = marked.partition(board => (board ++ board.transpose).exists(_.flatten.isEmpty))
     if (won.nonEmpty && firstWin || others.isEmpty && !firstWin)
       won.head.flatten.flatten.sum * numbers.head
